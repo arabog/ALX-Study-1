@@ -16,8 +16,6 @@ int main(void) {
     printf("Hello, World!");
 }
 
-*see file hello.c*
-
 Let's describe the program source code: we first import the stdio library (the name stands for standard input-output library). This library gives us access to input/output functions.  
 
 C is a very small language at its core, and anything that's not part of the core is provided by libraries.  
@@ -40,12 +38,41 @@ That's because this is a function invocation. Somewhere, inside the stdio librar
 You don't need to understand what this means now, but in short, this is the definition. And when we call printf("Hello, World!");, that's where the function is run.
 
 The main() function we defined above:  
-#include <stdio.h>
+    #include <stdio.h>
 
-int main(void) {
-    printf("Hello, World!");
-}
+    int main(void) {
+        printf("Hello, World!");
+    }
 
 will be run by the operating system when the program is executed.
 
-## How do we execute a C program?
+### How do we execute a C program?
+As mentioned, C is a compiled language. To run the program we must first compile it. Any Linux or macOS computer already comes with a C compiler built-in.   
+
+In any case, when you open the terminal window you can type `gcc`, and this command should return an error saying that you didn't specify any file.  
+
+That's good. It means the C compiler is there, and we can start using it.  
+
+Now save the code above into a hello.c file. *see file hello.c*
+
+Now type `gcc hello.c -o hello`  
+The program should give you no errors but it should have generated a hello executable. Now type  
+
+`./hello` to run it.  
+
+![c1](c1.png?raw=true "c1")
+
+I prepend ./ to the program name to tell the terminal that the command is in the current folder.  
+
+Now if you call `ls -al hello`, you can see that the program is only 16KB in size:  
+
+![c2](c2.png?raw=true "c2")
+
+This is one of the pros of C: it's highly optimized, and this is also one of the reasons it's this good for embedded devices that have a very limited amount of resources.  
+
+![cf1](cf1.png?raw=true "cf1")
+
+
+## Variables and types
+C is a statically typed language.
+
