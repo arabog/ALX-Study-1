@@ -76,3 +76,4 @@ This is one of the pros of C: it's highly optimized, and this is also one of the
 ## Variables and types
 C is a statically typed language.
 
+
