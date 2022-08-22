@@ -395,20 +395,348 @@ Any programming language provides the programmers the ability to perform choices
 The first is the if statement, with its else helper, and the second is the switch statement.
 
 **if**  
+In an if statement, you can check for a condition to be true, and then execute the block provided in the curly brackets:
+```
+int a = 1;
 
+if (a == 1) {
+  /* do something */
+}
+```
 
+You can append an else block to execute a different block if the original condition turns out to be false:
 
+```
+int a = 1;
 
+if (a == 2) {
+  /* do something */
+} else {
+  /* do something else */
+}
+```
 
+Beware of one common source of bugs - always use the comparison operator == in comparisons, and not the assignment operator =. If you don't, the if conditional check will always be true, unless the argument is 0, for example if you do:
+
+```
+int a = 0;
+
+if (a = 0) {
+  /* never invoked */
+}
+```
+
+Why does this happen? Because the conditional check will look for a boolean result (the result of a comparison), and the 0 number always equates to a false value. Everything else is true, including negative numbers.  
+
+You can have multiple else blocks by stacking together multiple if statements:  
+
+```
+int a = 1;
+
+if (a == 2) {
+  /* do something */
+} else if (a == 1) {
+  /* do something else */
+} else {
+  /* do something else again */
+}
+```
+
+**switch**
+If you need to do too many if / else / if blocks to perform a check, perhaps because you need to check the exact value of a variable, then switch can be very useful to you.  
+
+You can provide a variable as condition, and a series of case entry points for each value you expect:  
+
+```
+int a = 1;
+
+switch (a) {
+  case 0:
+    /* do something */
+    break;
+  case 1:
+    /* do something else */
+    break;
+  case 2:
+    /* do something else */
+    break;
+}
+```
+
+We need a break keyword at the end of each case to avoid the next case being executed when the one before ends. This "cascade" effect can be useful in some creative ways.  
+
+You can add a "catch-all" case at the end, labeled default:  
+
+```
+int a = 1;
+
+switch (a) {
+  case 0:
+    /* do something */
+    break;
+  case 1:
+    /* do something else */
+    break;
+  case 2:
+    /* do something else */
+    break;
+  default:
+    /* handle all the other cases */
+    break;
+}
+```
 
 ## Loops
+C offers us three ways to perform a loop: for loops, while loops and do while loops. They all allow you to iterate over arrays, but with a few differences.  
+
+**For loops**
+The first and probably most common way to perform a loop is for loops.
+
+Using the `for` keyword we can define the rules of the loop up front, and then provide the block that is going to be executed repeatedly.  
+
+```
+for (int i = 0; i <= 10; i++) {
+  /* instructions to be repeated */
+  printf("%u ", i);
+}
+```
+The (int i = 0; i <= 10; i++) block contains 3 parts of the looping details:  
+the initial condition (int i = 0)  
+the test (i <= 10)  
+the increment (i++)  
+
+We first define a loop variable, in this case named i. i is a common variable name to be used for loops, along with j for nested loops (a loop inside another loop). It's just a convention.  
+
+The variable is initialized at the 0 value, and the first iteration is done. Then it is incremented as the increment part says (i++ in this case, incrementing by 1), and all the cycle repeats until you get to the number 10.  
+
+Loops can also start from a high number, and go a lower number, like this:
+
+```
+for (int i = 10; i > 0; i--) {
+  /* instructions to be repeated */
+}
+```
+
+You can also increment the loop variable by 2 or another value:
+
+```
+for (int i = 0; i < 1000; i = i + 30) {
+  /* instructions to be repeated */
+}
+```
+
+**While loops**  
+Instead of defining all the loop data up front when you start the loop, like you do in the for loop, using while you just check for a condition:
+
+```
+while (i < 10) {
+
+}
+```
+
+This assumes that i is already defined and initialized with a value.  
+And this loop will be an infinite loop unless you increment the i variable at some point inside the loop.   
+
+This is what you need for a "correct" while loop:
+
+```
+int i = 0;  //init
+
+while (i < 10) {  //conditn
+  /* do something */
+
+  i++;  //incre-/decre-ment
+}
+```
+**Do while loops**  
+While loops are great, but there might be times when you need to do one particular thing: you want to always execute a block, and then maybe repeat it. This is done using the do while keyword.   
+
+```
+int i = 0;
+
+do {
+  /* do something */
+
+  i++;
+} while (i < 10);
+```
+
+The block that contains the `/* do something */` comment is always executed at least once, regardless of the condition check at the bottom. Then, until `i` is less than 10, we'll repeat the block.  
+
+**Breaking out of a loop using break**  
+In all the C loops we have a way to break out of a loop at any point  in time, immediately, regardless of the conditions set for the loop. This is done using the break keyword.  
+Having this option to break out of a loop is particularly interesting for while loops (and do while too), because we can create seemingly infinite loops that end when a  condition occurs. You define this inside the loop block:  
+```
+int i = 0;
+
+while (1) {
+  /* do something */
+
+  i++;
+
+  if (i == 10) break;
+}
+```
 
 ## Arrays
+An array is a variable that stores multiple values. Every value in the array, in C, must have the same type. This means you will have arrays of int values, arrays of double values, and more.  
+
+You can define an array of int values like this:  
+`int prices[5];`
+
+You must always specify the size of the array. C does not provide dynamic arrays out of the box (you have to use a data structure like a linked list for that).  
+
+You can use a constant to define the size:  
+const int SIZE = 5;  
+int prices[SIZE];  
+
+You can initialize an array at definition time, like this:  
+`int prices[5] = { 1, 2, 3, 4, 5 };  `
+
+But you can also assign a value after the definition, in this way:  
+
+```
+int prices[5];
+
+prices[0] = 1;
+prices[1] = 2;
+prices[2] = 3;
+prices[3] = 4;
+prices[4] = 5;
+```
+
+Or, more practical, using a loop:  
+```
+int prices[5];
+
+for(int i = 0; i < 5; i++) {
+  prices[i] = i + 1;
+}
+```
+
+And you can reference an item in the array by using square brackets after the array variable name, adding an integer to determine the index value.   
+
+```
+prices[0]; /* array item value: 1 */
+prices[1]; /* array item value: 2 */
+```
+
+Array indexes start from 0, so an array with 5 items, like the prices array above, will have items ranging from prices[0] to prices[4].  
+
 
 ## Strings
+In C, strings are one special kind of array: a string is an array of char values:  
+`char name[7];`  
+
+It is commonly used to store letters of the ASCII chart. A string can be initialized like you initialize a normal array:  
+```
+char name[7] = { "F", "l", "a", "v", "i", "o" };
+```
+
+Or more conveniently with a string literal (also called string constant), a sequence of characters enclosed in double quotes:  
+```
+char name[7] = "Flavio";
+```
+You can print a string via printf() using %s:
+```
+printf("%s", name);
+```
+Do you notice how "Flavio" is 6 chars long, but I defined an array of length 7? Why? This is because the `last character` in a string must be a  `0 value, the string terminator`, and we must make space for it.  
+
+This is important to keep in mind especially when manipulating strings.  
+
+Speaking of manipulating strings, there's one important standard library that is provided by C: `string.h`.  
+
+This library is essential because it abstracts many of the low level details of working with strings, and provides us with a set of useful functions.  
+
+You can load the library in your program by adding on top:  
+```
+#include <string.h>
+```
+And once you do that, you have access to:  
+
+```
+strcpy() to copy a string over another string
+strcat() to append a string to another string
+strcmp() to compare two strings for equality
+strncmp() to compare the first n characters of two strings
+strlen() to calculate the length of a string
+```
 
 ## Pointers
+Pointers are one of the most confusing/challenging parts of C, in my opinion.  
+**A pointer is the address of a block of memory that contains a variable.**  
 
+When you declare an integer number like this:  
+```
+int age = 37;
+```
+We can use the `&` operator to get the value of the address in memory of a variable:  
+```
+printf("%p", &age); /* 0x7ffeef7dcb9c */
+```
+
+I used the %p format specified in printf() to print the address value.
+
+We can assign the address to a variable:
+
+```
+int *address = &age;
+```
+Using int *address in the declaration, we are not declaring an integer variable, but rather a pointer to an integer.   
+
+We can use the pointer operator * to get the value of the variable an address is pointing to:  
+```
+int age = 37;
+int *address = &age;
+printf("%u", *address); /* 37 */
+```
+
+This time we are using the pointer operator again, but since it's not a declaration this time it means "the value of the variable this pointer points to".    
+
+In this example we declare an age variable, and we use a pointer to initialize the value:  
+```
+int age;
+int *address = &age;
+*address = 37;
+printf("%u", *address);
+```
+
+When working with C, you'll find that a lot of things are built on top of this simple concept. So make sure you familiarize with it a bit by running the above examples on your own.  
+
+Pointers are a great opportunity because they force us to think about memory addresses and how data is organized.    
+
+Arrays are one example. When you declare an array:
+```
+int prices[3] = { 5, 4, 3 };
+```
+The prices variable is actually a pointer to the first item of the array. You can get the value of the first item using this printf() function in this case:
+```
+printf("%u", *prices); /* 5 */
+```
+The cool thing is that we can get the second item by adding 1 to the prices pointer:
+```
+printf("%u", *(prices + 1)); /* 4 */
+```
+And so on for all the other values.  
+We can also do many nice string manipulation operations, since strings are arrays under the hood.  
+
+We also have many more applications, including passing the reference of an object or a function around to avoid consuming more resources to copy it.  
+
+## Functions
+
+
+
+## Input and Output
+
+
+## Variable scope
+
+
+
+## Static variables
+
+## Global variables
 
 
 <!-- ![cf1](cf1.png?raw=true "cf1") -->
