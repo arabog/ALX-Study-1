@@ -370,7 +370,7 @@ int b = 4;
 int c = b + a * a / b - a;  
 What's the value of c?  
 
-There is a set of rules that help us solve this puzzle. In order from less precedence to more precedence, we have:  
+There is a set of rules that help us solve this puzzle. In order, from less precedence to more precedence, we have:  
 the = assignment operator  
 the + and - binary operators  
 the * and / operators  
@@ -387,6 +387,28 @@ Parentheses have higher priority over anything else.
 
 The above example expression can be rewritten as:  
 int c = b + ((a * a) / b) - a;  
+
+
+## Conditionals
+Any programming language provides the programmers the ability to perform choices. C provides us 2 ways to do so.
+
+The first is the if statement, with its else helper, and the second is the switch statement.
+
+**if**  
+
+
+
+
+
+
+## Loops
+
+## Arrays
+
+## Strings
+
+## Pointers
+
 
 
 <!-- ![cf1](cf1.png?raw=true "cf1") -->
