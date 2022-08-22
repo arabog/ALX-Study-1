@@ -310,30 +310,33 @@ b = ++a   b is 4, a is 4
 
 ### Comparison operators
 ```
-OPERATOR	NAME	            EXAMPLE  
-    ==	    Equal operator	    a == b
-    !=	    Not equal operator	a != b
-    >	    Bigger than	        a > b
-    <	    Less than	        a < b
-    >=	    Bigger than or equal to	a >= b
-    <=	    Less than or equal to	a <= b
+OPERATOR	        NAME	              EXAMPLE  
+    ==	    Equal operator	          a == b
+    !=	    Not equal operator	      a != b
+    >	    Bigger than	                a > b
+    <	    Less than	                  a < b
+    >=	    Bigger than or equal to	  a >= b
+    <=	    Less than or equal to	    a <= b
 ```
 
 ### Logical operators
-! NOT (example: !a)  
-&& AND (example: a && b)  
-|| OR (example: a || b)  
+```
+!       NOT       (example: !a)  
+&&      AND       (example: a && b)  
+||      OR        (example: a || b)  
+```
 
-
-Compound assignment operators
+Compound assignment operators  
 Those operators are useful to perform an assignment and at the same time perform an arithmetic operation:
 
-OPERATOR	        NAME	        EXAMPLE
+```
+OPERATOR	        NAME	                EXAMPLE
 +=	        Addition assignment	        a += b
 -=	        Subtraction assignment	    a -= b
-*=	        Multiplication assignment	a *= b
+*=	        Multiplication assignment	  a *= b
 /=	        Division assignment	        a /= b
-%=	        Modulo assignment	        a %= b
+%=	        Modulo assignment	          a %= b
+```
 
 ### The ternary operator
 The ternary operator is the only operator in C that works with 3 operands, and it’s a short way to express conditionals.  
