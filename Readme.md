@@ -75,8 +75,6 @@ Now if you call `ls -al hello`, you can see that the program is only 16KB in siz
 
 This is one of the pros of C: it's highly optimized, and this is also one of the reasons it's this good for embedded devices that have a very limited amount of resources.  
 
-![cf1](cf1.png?raw=true "cf1")
-
 
 ## Variables and types
 C is a statically typed language.
@@ -89,7 +87,7 @@ In this example we initialize a variable age with type int:
 You can also initialize a variable at declaration, specifying the initial value:  
 `int age = 37;`
 
-Once you declare a variable, you are then able to use it in your program code. You can change its value at any time, using the = operator for example, like in age = 100; (provided the new value is of the same type).  
+Once you declare a variable, you are then able to use it in your program code. You can change its value at any time, using the `=` operator for example, like in age = 100; (provided the new value is of the same type).  
 
 In this case:  
 ```
@@ -110,13 +108,13 @@ int
 short  
 long  
 
-Most of the time, you'll likely use an int to store an integer. But in some cases, you might want to choose one of the other 3 options.  
+Most of the time, you'll likely use an `int` to store an integer. But in some cases, you might want to choose one of the other 3 options.  
 
 The char type is commonly used to store letters of the ASCII chart, but it can be used to hold small integers from -128 to 127.   
-`char` takes at least 1 byte.
-`int` takes at least 2 bytes. 
-`short` takes at least 2 bytes. 
-`long` takes at least 4 bytes.
+`char` takes at least 1 byte.  
+`int` takes at least 2 bytes.   
+`short` takes at least 2 bytes.   
+`long` takes at least 4 bytes.  
 
 As you can see, we are not guaranteed the same values for different environments. We only have an indication. The problem is that the exact numbers that can be stored in each data type depends on the implementation and the architecture.  
 
@@ -247,18 +245,17 @@ long double size: 16 bytes
 ```
 
 ## Constants
-A constant is declared similarly to variables, except it is prepended with the const keyword, and you always need to specify a value.  
+A constant is declared similarly to variables, except it is prepended with the `const` keyword, and you always need to specify a value.  
 `const int age = 32;`
 
-This is perfectly valid C, although it is common to declare constants uppercase, like this:  
-`const int AGE = 37;`
+This is perfectly valid C, although it is common to declare constants uppercase, like this: `const int AGE = 37;`
 
 It's just a convention, but one that can greatly help you while reading or writing a C program as it improves readability. Uppercase name means constant, lowercase name means variable.  
 
 Another way to define constants is by using this syntax:  
 `#define AGE 37`
 
-In this case, you don't need to add a type, and you don't also need the = equal sign, and you omit the semicolon at the end.  
+In this case, you don't need to add a `type`, and you don't also need the `=` equal sign, and you omit the `semicolon` at the end.  
 
 The C compiler will infer the type from the value specified, at compile time.  
 
@@ -282,39 +279,45 @@ I am keeping bitwise operators, structure operators and pointer operators out of
 In this macro group I am going to separate binary operators and unary operators.  
 
 Binary operators work using two operands:  
+```
 OPERATOR	    NAME	        EXAMPLE  
     =	    Assignment	        a = b  
-    +	    Addition	        a + b  
+    +	    Addition	          a + b  
     -	    Subtraction	        a - b  
     *	    Multiplication	    a * b  
-    /	    Division	        a / b  
+    /	    Division	          a / b  
     %	    Modulo	            a % b  
-
+```
 
 Unary operators only take one operand:  
+```
 OPERATOR	        NAME	    EXAMPLE  
     +	        Unary plus	    +a  
     -	        Unary minus	    -a  
     ++	        Increment	    a++ or ++a  
     --	        Decrement	    a-- or --a  
+```
 
 The difference between a++ and ++a is that a++ increments the a variable after using it. ++a increments the a variable before using it.  
 
 For example:  
 int a = 2;  
 int b;  
-
-b = a++ /* b is 2, a is 3 */  
-b = ++a /* b is 4, a is 4 */  
+```
+b = a++   b is 2, a is 3  
+b = ++a   b is 4, a is 4
+```
 
 ### Comparison operators
-OPERATOR	NAME	            EXAMPLE
+```
+OPERATOR	NAME	            EXAMPLE  
     ==	    Equal operator	    a == b
     !=	    Not equal operator	a != b
     >	    Bigger than	        a > b
     <	    Less than	        a < b
     >=	    Bigger than or equal to	a >= b
     <=	    Less than or equal to	a <= b
+```
 
 ### Logical operators
 ! NOT (example: !a)  
@@ -382,3 +385,5 @@ Parentheses have higher priority over anything else.
 The above example expression can be rewritten as:  
 int c = b + ((a * a) / b) - a;  
 
+
+<!-- ![cf1](cf1.png?raw=true "cf1") -->
