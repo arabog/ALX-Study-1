@@ -1,6 +1,7 @@
 https://www.freecodecamp.org/news/the-c-beginners-handbook/?inf_contact_key=23bf5265a3651c14888725bce7f1c3fc3a5186b0959d36194e900cf71a9c9586
 
-# The C Beginner's Handbook: Learn C Programming Language basics in just a few hours
+# The C Beginner's Handbook:   
+# Learn C Programming Language basics in just a few hours
 
 ## Introduction to C
 C is a compiled programming language, like Go, Java, Swift or Rust. Other popular programming language like Python, Ruby or JavaScript are interpreted. The difference is consistent: a compiled language generates a binary file that can be directly executed and distributed.  
@@ -26,18 +27,18 @@ C is a very small language at its core, and anything that's not part of the core
 
 This function is wrapped into a `main()` function. The `main()` function is the entry point of any C program.  
 
-A function is a routine that takes one or more arguments, and returns a single value.  
+**A function is a routine that takes one or more arguments, and returns a single value.**  
 
-In the case of main(), the function gets no arguments, and returns an integer. We identify that using the void keyword for the argument, and the int keyword for the return value.  
+In the case of main(), the function gets no arguments, and returns an integer. We identify that using the `void` keyword for the argument, and the `int` keyword for the return value.  
 
-The function has a body, which is wrapped in curly braces. Inside the body we have all the code that the function needs to perform its operations.  
+The function has a body, which is wrapped in curly braces, {}. Inside the body we have all the code that the function needs to perform its operations.  
 
 The printf() function is written differently, as you can see. It has no return value defined, and we pass a string, wrapped in double quotes. We didn't specify the type of the argument.  
 
 That's because this is a function invocation. Somewhere, inside the stdio library, printf is defined as  
 `int printf(const char *format, ...)`;  
 
-You don't need to understand what this means now, but in short, this is the definition. And when we call printf("Hello, World!");, that's where the function is run.
+You don't need to understand what this means now, but in short, this is the definition. And when we call printf("Hello, World!"), that's where the function is run.
 
 The main() function we defined above:  
 ```
@@ -60,13 +61,13 @@ That's good. It means the C compiler is there, and we can start using it.
 Now save the code above into a hello.c file. *see file hello.c*
 
 Now type `gcc hello.c -o hello`  
-The program should give you no errors but it should have generated a hello executable. Now type  
+The program should give you no errors but it should have generated a `hello` executable (inside ur directory). Now type  
 
 `./hello` to run it.  
 
 ![c1](c1.png?raw=true "c1")
 
-I prepend ./ to the program name to tell the terminal that the command is in the current folder.  
+I prepend `./` to the program name to tell the terminal that the command is in the current folder.  
 
 Now if you call `ls -al hello`, you can see that the program is only 16KB in size:  
 
