@@ -394,7 +394,7 @@ Any programming language provides the programmers the ability to perform choices
 
 The first is the if statement, with its else helper, and the second is the switch statement.
 
-**if**  
+**if**    
 In an if statement, you can check for a condition to be true, and then execute the block provided in the curly brackets:
 ```
 int a = 1;
@@ -442,7 +442,7 @@ if (a == 2) {
 }
 ```
 
-**switch**
+**switch**  
 If you need to do too many if / else / if blocks to perform a check, perhaps because you need to check the exact value of a variable, then switch can be very useful to you.  
 
 You can provide a variable as condition, and a series of case entry points for each value you expect:  
@@ -489,7 +489,7 @@ switch (a) {
 ## Loops
 C offers us three ways to perform a loop: for loops, while loops and do while loops. They all allow you to iterate over arrays, but with a few differences.  
 
-**For loops**
+**For loops**  
 The first and probably most common way to perform a loop is for loops.
 
 Using the `for` keyword we can define the rules of the loop up front, and then provide the block that is going to be executed repeatedly.  
@@ -525,7 +525,7 @@ for (int i = 0; i < 1000; i = i + 30) {
 }
 ```
 
-**While loops**  
+**While loops**    
 Instead of defining all the loop data up front when you start the loop, like you do in the for loop, using while you just check for a condition:
 
 ```
@@ -548,7 +548,7 @@ while (i < 10) {  //conditn
   i++;  //incre-/decre-ment
 }
 ```
-**Do while loops**  
+**Do while loops**    
 While loops are great, but there might be times when you need to do one particular thing: you want to always execute a block, and then maybe repeat it. This is done using the do while keyword.   
 
 ```
@@ -563,7 +563,7 @@ do {
 
 The block that contains the `/* do something */` comment is always executed at least once, regardless of the condition check at the bottom. Then, until `i` is less than 10, we'll repeat the block.  
 
-**Breaking out of a loop using break**  
+**Breaking out of a loop using break**    
 In all the C loops we have a way to break out of a loop at any point  in time, immediately, regardless of the conditions set for the loop. This is done using the break keyword.  
 Having this option to break out of a loop is particularly interesting for while loops (and do while too), because we can create seemingly infinite loops that end when a  condition occurs. You define this inside the loop block:  
 ```
@@ -663,7 +663,7 @@ strncmp() to compare the first n characters of two strings
 strlen() to calculate the length of a string
 ```
 
-## Pointers
+## Pointers  
 Pointers are one of the most confusing/challenging parts of C, in my opinion.  
 **A pointer is the address of a block of memory that contains a variable.**  
 
