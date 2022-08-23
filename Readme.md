@@ -392,10 +392,10 @@ int c = b + ((a * a) / b) - a;
 ## Conditionals
 Any programming language provides the programmers the ability to perform choices. C provides us 2 ways to do so.
 
-The first is the if statement, with its else helper, and the second is the switch statement.
+The first is the `if` statement, with its else helper, and the second is the `switch` statement.
 
 **if**    
-In an if statement, you can check for a condition to be true, and then execute the block provided in the curly brackets:
+In an `if` statement, you can check for a condition to be `true`, and then execute the block provided in the curly brackets, {}:
 ```
 int a = 1;
 
@@ -404,7 +404,7 @@ if (a == 1) {
 }
 ```
 
-You can append an else block to execute a different block if the original condition turns out to be false:
+You can append an `else` block to execute a different block if the original condition turns out to be `false`:
 
 ```
 int a = 1;
@@ -416,7 +416,7 @@ if (a == 2) {
 }
 ```
 
-Beware of one common source of bugs - always use the comparison operator == in comparisons, and not the assignment operator =. If you don't, the if conditional check will always be true, unless the argument is 0, for example if you do:
+Beware of one common source of bugs - always use the comparison operator `==` in comparisons, and not the assignment operator `=`. If you don't, the `if` conditional check will always be `true`, unless the argument is `0`, for example if you do:
 
 ```
 int a = 0;
@@ -426,7 +426,7 @@ if (a = 0) {
 }
 ```
 
-Why does this happen? Because the conditional check will look for a boolean result (the result of a comparison), and the 0 number always equates to a false value. Everything else is true, including negative numbers.  
+Why does this happen? Because the conditional check will look for a boolean result (the result of a comparison), and the 0 number always equates to a false value. **Everything else is true, including negative numbers.**  
 
 You can have multiple else blocks by stacking together multiple if statements:  
 
@@ -443,29 +443,29 @@ if (a == 2) {
 ```
 
 **switch**  
-If you need to do too many if / else / if blocks to perform a check, perhaps because you need to check the exact value of a variable, then switch can be very useful to you.  
+If you need to do too many `if / else / if` blocks to perform a check, perhaps because you need to check the exact value of a variable, then `switch` can be very useful to you.  
 
-You can provide a variable as condition, and a series of case entry points for each value you expect:  
+You can provide a variable as condition, and a series of case entry points to each value you expect:  
 
 ```
 int a = 1;
 
-switch (a) {
-  case 0:
+switch (a) {    <------condition
+  case 0:       <------ value expected
     /* do something */
     break;
-  case 1:
+  case 1:       <------ value expected
     /* do something else */
     break;
-  case 2:
+  case 2:       <------ value expected
     /* do something else */
     break;
 }
 ```
 
-We need a break keyword at the end of each case to avoid the next case being executed when the one before ends. This "cascade" effect can be useful in some creative ways.  
+We need a `break` keyword at the end of each case to avoid the next case being executed when the one before ends. This "cascade" effect can be useful in some creative ways.  
 
-You can add a "catch-all" case at the end, labeled default:  
+You can add a "catch-all" case at the end, labeled `default`:  
 
 ```
 int a = 1;
@@ -487,10 +487,10 @@ switch (a) {
 ```
 
 ## Loops
-C offers us three ways to perform a loop: for loops, while loops and do while loops. They all allow you to iterate over arrays, but with a few differences.  
+C offers us three ways to perform a loop: `for loops`, `while loops` and `do while loops`. They all allow you to iterate over arrays, but with a few differences.  
 
 **For loops**  
-The first and probably most common way to perform a loop is for loops.
+The first and probably most common way to perform a loop is `for` loops.
 
 Using the `for` keyword we can define the rules of the loop up front, and then provide the block that is going to be executed repeatedly.  
 
@@ -500,16 +500,16 @@ for (int i = 0; i <= 10; i++) {
   printf("%u ", i);
 }
 ```
-The (int i = 0; i <= 10; i++) block contains 3 parts of the looping details:  
-the initial condition (int i = 0)  
-the test (i <= 10)  
-the increment (i++)  
+The `(int i = 0; i <= 10; i++)` block contains 3 parts of the looping details:  
+the initial condition `(int i = 0)`  
+the test `(i <= 10)`  
+the increment `(i++)`  
 
-We first define a loop variable, in this case named i. i is a common variable name to be used for loops, along with j for nested loops (a loop inside another loop). It's just a convention.  
+We first define a loop variable, in this case named `i`. `i` is a common variable name to be used for loops, along with `j` for nested loops (a loop inside another loop). It's just a convention.  
 
-The variable is initialized at the 0 value, and the first iteration is done. Then it is incremented as the increment part says (i++ in this case, incrementing by 1), and all the cycle repeats until you get to the number 10.  
+The variable is initialized at the `0` value, and the first iteration is done. Then it is incremented as the increment part says (i++ in this case, incrementing by 1), and all the cycle repeats until you get to the number 10.  
 
-Loops can also start from a high number, and go a lower number, like this:
+Loops can also start from a high number, and go to a lower number, like this:
 
 ```
 for (int i = 10; i > 0; i--) {
@@ -534,8 +534,8 @@ while (i < 10) {
 }
 ```
 
-This assumes that i is already defined and initialized with a value.  
-And this loop will be an infinite loop unless you increment the i variable at some point inside the loop.   
+This assumes that `i` is already defined and initialized with a value.  
+And **this loop will be an infinite loop unless you increment the i variable at some point inside the loop**.   
 
 This is what you need for a "correct" while loop:
 
@@ -549,7 +549,7 @@ while (i < 10) {  //conditn
 }
 ```
 **Do while loops**    
-While loops are great, but there might be times when you need to do one particular thing: you want to always execute a block, and then maybe repeat it. This is done using the do while keyword.   
+While loops are great, but there might be times when you need to do one particular thing: you want to always execute a block, before you repeat it. This is done using the `do while` keyword.   
 
 ```
 int i = 0;
@@ -564,31 +564,33 @@ do {
 The block that contains the `/* do something */` comment is always executed at least once, regardless of the condition check at the bottom. Then, until `i` is less than 10, we'll repeat the block.  
 
 **Breaking out of a loop using break**    
-In all the C loops we have a way to break out of a loop at any point  in time, immediately, regardless of the conditions set for the loop. This is done using the break keyword.  
+In all the C loops we have a way to break out of a loop at any point  in time, immediately, regardless of the conditions set for the loop. This is done using the `break` keyword.  
 Having this option to break out of a loop is particularly interesting for while loops (and do while too), because we can create seemingly infinite loops that end when a  condition occurs. You define this inside the loop block:  
 ```
 int i = 0;
 
-while (1) {
+while (1) {       <-------- true, no condition to stop d loop
   /* do something */
 
   i++;
 
-  if (i == 10) break;
+  if (i == 10) break;   <-------- this stops d loop and makes it not an infinite loop
 }
 ```
 
 ## Arrays
-An array is a variable that stores multiple values. Every value in the array, in C, must have the same type. This means you will have arrays of int values, arrays of double values, and more.  
+An array is a variable that stores multiple values. **Every value in the array, in C, must have the same type.** This means you will have arrays of `int` values, arrays of `double values`, and more.  
 
-You can define an array of int values like this:  
+You can define an array of `int` values like this:  
 `int prices[5];`
 
 You must always specify the size of the array. C does not provide dynamic arrays out of the box (you have to use a data structure like a linked list for that).  
 
 You can use a constant to define the size:  
+```
 const int SIZE = 5;  
 int prices[SIZE];  
+```
 
 You can initialize an array at definition time, like this:  
 `int prices[5] = { 1, 2, 3, 4, 5 };  `
@@ -621,12 +623,11 @@ prices[0]; /* array item value: 1 */
 prices[1]; /* array item value: 2 */
 ```
 
-Array indexes start from 0, so an array with 5 items, like the prices array above, will have items ranging from prices[0] to prices[4].  
+Array indexes start from `0`, so an array with 5 items, like the prices array above, will have items ranging from prices[0] to prices[4].  
 
 
 ## Strings
-In C, strings are one special kind of array: a string is an array of char values:  
-`char name[7];`  
+In C, strings are one special kind of array: a string is an array of char values: `char name[7];`  
 
 It is commonly used to store letters of the ASCII chart. A string can be initialized like you initialize a normal array:  
 ```
@@ -637,7 +638,7 @@ Or more conveniently with a string literal (also called string constant), a sequ
 ```
 char name[7] = "Flavio";
 ```
-You can print a string via printf() using %s:
+You can print a string via `printf()` using `%s`:
 ```
 printf("%s", name);
 ```
@@ -664,8 +665,7 @@ strlen() to calculate the length of a string
 ```
 
 ## Pointers  
-Pointers are one of the most confusing/challenging parts of C, in my opinion.  
-**A pointer is the address of a block of memory that contains a variable.**  
+Pointers are one of the most confusing/challenging parts of C, in my opinion. **A pointer is the address of a memory block that contains a variable.**  
 
 When you declare an integer number like this:  
 ```
@@ -676,7 +676,7 @@ We can use the `&` operator to get the value of the address in memory of a varia
 printf("%p", &age); /* 0x7ffeef7dcb9c */
 ```
 
-I used the %p format specified in printf() to print the address value.
+I used the `%p` format specified in printf() to print the address value.
 
 We can assign the address to a variable:
 
@@ -685,7 +685,7 @@ int *address = &age;
 ```
 Using int *address in the declaration, we are not declaring an integer variable, but rather a pointer to an integer.   
 
-We can use the pointer operator * to get the value of the variable an address is pointing to:  
+We can use the pointer operator `*` to get the value of the variable an address is pointing to:  
 ```
 int age = 37;
 int *address = &age;
@@ -710,7 +710,7 @@ Arrays are one example. When you declare an array:
 ```
 int prices[3] = { 5, 4, 3 };
 ```
-The prices variable is actually a pointer to the first item of the array. You can get the value of the first item using this printf() function in this case:
+The `prices variable` is actually a pointer to the first item of the array. You can get the value of the first item using this `printf()` function in this case:
 ```
 printf("%u", *prices); /* 5 */
 ```
@@ -719,7 +719,7 @@ The cool thing is that we can get the second item by adding 1 to the prices poin
 printf("%u", *(prices + 1)); /* 4 */
 ```
 And so on for all the other values.  
-We can also do many nice string manipulation operations, since strings are arrays under the hood.  
+We can also do many nice string manipulation operations, since `strings are arrays under the hood`.  
 
 We also have many more applications, including passing the reference of an object or a function around to avoid consuming more resources to copy it.  
 
