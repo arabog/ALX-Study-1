@@ -724,19 +724,307 @@ We can also do many nice string manipulation operations, since `strings are arra
 We also have many more applications, including passing the reference of an object or a function around to avoid consuming more resources to copy it.  
 
 ## Functions
+Functions are the way we can structure our code into subsets that we can:
+give a name to  
+call when we need them  
 
+Starting from your very first program, a "Hello, World!", you immediately make use of C functions:
 
+```
+#include <stdio.h>
+
+int main(void) {
+    printf("Hello, World!");
+}
+```
+The main() function is a very important function, as it's the entry point for a C program. Here's another function:
+
+```
+void doSomething(int value) {
+  printf("%u", value);
+}
+```
+Functions have 4 important aspects:  
+they have a **name**, so we can invoke ("call") them later  
+they specify a **return value**  
+they can have **arguments**   
+they have a **body**, wrapped in curly braces  
+
+The function body is the set of instructions that are executed any time we invoke a function.  
+
+If the function has no return value, you can use the keyword `void` before the function name. Otherwise you specify the function return value type (`int` for an integer, `float` for a floating point value, `const char *` for a string, etc).  
+
+**You cannot return more than one value from a function.**  
+
+A function can have arguments. They are optional. If it does not have them, inside the parentheses we insert void, like this:  
+```
+void doSomething(void) {
+   /* ... */
+}
+```
+
+In this case, when we invoke the function we'll call it with nothing in the parentheses:  
+
+```
+doSomething();
+```
+If we have one parameter, we specify the type and the name of the parameter, like this:  
+
+```
+void doSomething(int value) {
+   /* ... */
+}
+```
+When we invoke the function, we'll pass that parameter in the parentheses, like this:  
+
+```
+doSomething(3);
+```
+We can have multiple parameters, and if so we separate them using a comma, both in the declaration and in the invocation:  
+
+```
+void doSomething(int value1, int value2) {
+   /* ... */
+}
+
+doSomething(3, 4);  
+```
+`Parameters are passed by copy`. This means that if you modify value1, its value is modified locally. The value outside of the function, where it was passed in the invocation, does not change.  
+
+If you pass a pointer as a parameter, you can modify that variable value because you can now access it directly using its memory address.  
+`You can't define a default value` for a parameter. C++ can do that (and so Arduino Language programs can), but C can't.    
+
+Make sure you define the function before calling it, or the compiler will raise a warning and an error.  
+
+Inside a function, you can declare variables.
+```
+void doSomething(int value) {
+  int doubleValue = value * 2;
+}
+```
+A variable is created at the point of invocation of the function and is destroyed when the function ends. It's not visible from the outside.  
+
+Inside a function, you can call the function itself. This is called recursion and it's something that offers peculiar opportunities.  
 
 ## Input and Output
+C is a small language, and the "core" of C does not include any Input/Output (I/O) functionality.
+This is not something unique to C, of course.   
 
+In the case of C, Input/Output is provided to us by the C Standard Library via a set of functions defined in the stdio.h header file.  
+
+You can import this library using:
+```
+#include <stdio.h>
+```
+on top of your C file. This library provides us with, among many other functions:  
+```
+printf()
+scanf()
+sscanf()
+fgets()
+fprintf()
+```
+
+### I/O streamS
+We have 3 kinds of I/O streams in C:
+```
+stdin (standard input)
+stdout (standard output)
+stderr (standard error)
+```
+With I/O functions we always work with streams. A stream is a high level interface that can represent a device or a file. From the C standpoint, we don't have any difference in reading from a file or reading from the command line: it's an I/O stream in any case.  
+
+Some functions are designed to work with a specific stream, like `printf()`, which we use to print characters to `stdout`. Using its more general counterpart `fprintf()`, we can specify which stream to write to.  
+
+printf() is one of the first functions you'll use when learning C programming.
+
+In its simplest usage form, you pass it a string literal:
+```
+printf("hey!");
+```
+and the program will print the content of the string to the screen.  
+
+You can print the value of a variable. But it's a bit tricky because you need to add a special character, **a placeholder, which changes depending on the type of the variable.** For example we use `%d` for a signed decimal integer digit:
+```
+int age = 37;
+
+printf("My age is %d", age);
+```
+
+We can print more than one variable by using commas:
+```
+int age_yesterday = 37;
+int age_today = 36;
+
+printf("Yesterday my age was %d and today is %d", age_yesterday, age_today);
+```
+There are other format specifiers like `%d`:
+```
+%c for a char
+%s for a char
+%f for floating point numbers
+%p for pointers
+```
+and many more.
+
+We can use escape characters in printf(), like \n which we can use to make the output create a new line.  
+
+### scanf()
+`printf()` is used as an output function while an input function is `scanf()`.  
+
+This function is used to get a value from the user running the program, from the command line.  
+
+We must first define a variable that will hold the value we get from the input:  
+```
+int age;
+```
+Then we call `scanf()` with 2 arguments: `the format (type)` of the variable, and the `address of the variable`:  
+
+```
+scanf("%d", &age);
+```
+If we want to get a `string` as input, remember that a string name is a `pointer` to the first character, so you don't need the & character before it:  
+
+```
+char name[20];
+scanf("%s", name);
+```
+Here's a little program that uses both printf() and scanf():  
+
+```
+#include <stdio.h>
+
+int main(void) {
+  char name[20];
+  printf("Enter your name: ");
+  scanf("%s", name);
+  printf("you entered %s", name);
+}
+```
 
 ## Variable scope
+When you define a variable in a C program, depending on where you declare it, it will have a different scope. This means that it will be available in some places, but not in others.  
 
+The position determines 2 types of variables:  
+global variables  
+local variables  
 
+This is the difference: a variable declared inside a function is a local variable, like this:
+```
+int main(void) {
+  int age = 37;
+}
+```
+Local variables are only accessible from within the function, and when the function ends they stop their existence. They are cleared from the memory (with some exceptions).  
+
+A variable defined outside a function is a global variable, like in this example:
+```
+int age = 37;
+
+int main(void) {
+  /* ... */
+}
+```
+Global variables are accessible from any function of the program, and they are available for the whole execution of the program, until it ends.  
+
+I mentioned that local variables are not available any more after the function ends.  
+
+The reason is that local variables are declared on the stack, by default, unless you explicitly allocate them on the heap using pointers. But then you have to manage the memory yourself.  
 
 ## Static variables
+Inside a function, you can initialize a static variable using the static keyword.  
+
+I said "inside a function" because `global variables` are static by default, so there's no need to add the keyword.  
+
+What's a static variable? A static variable is initialized to 0 if no initial value is specified, and it retains the value across function calls.  
+
+```
+int incrementAge() {
+  int age = 0;
+  age++;
+  return age;
+}
+```
+If we call incrementAge() once, we'll get 1 as the return value. If we call it more than once, we'll always get 1 back, because age is a local variable and it's re-initialized to 0 on every single function call.  
+
+If we change the function to:
+```
+int incrementAge() {
+  static int age = 0;
+  age++;
+  return age;
+}
+```
+Now every time we call this function, we'll get an incremented value:
+```
+printf("%d\n", incrementAge());
+printf("%d\n", incrementAge());
+printf("%d\n", incrementAge());
+
+will give us
+
+1
+2
+3
+```
+We can also omit initializing age to 0 in static int age = 0;, and just write static int age; because static variables are automatically set to 0 when created.  
+
+We can also have static arrays. In this case, each single item in the array is initialized to 0:  
+```
+int incrementAge() {
+  static int ages[3];
+  ages[0]++;
+  return ages[0];
+}
+```
 
 ## Global variables
+In this section I want to talk more about the difference between global and local variables.  
 
+A local variable is defined inside a function, and it's only available inside that function.  
+
+```
+#include <stdio.h>
+
+int main(void) {
+  char j = 0;
+  j += 10;
+  printf("%u", j); //10
+}
+```
+`j` is not available anywhere outside the `main` function.
+
+A global variable is defined outside of any function.  
+
+```
+#include <stdio.h>
+
+char i = 0;
+
+int main(void) {
+  i += 10;
+  printf("%u", i); //10
+}
+```
+A global variable can be accessed by any function in the program.  Access is not limited to reading the value: the variable can be updated by any function.  
+
+Due to this, global variables are one way we have of sharing the same data between functions.
+
+The main difference with local variables is that the memory allocated for variables is freed once the function ends.  
+
+Global variables are only freed when the program ends.  
+
+## Type definitions
+
+## Enumerated Types
+
+## Structures
+
+## Command line parameters
+
+<!-- stop -->
+## Header files
+## The preprocessor
+## Conclusion
 
 <!-- ![cf1](cf1.png?raw=true "cf1") -->
