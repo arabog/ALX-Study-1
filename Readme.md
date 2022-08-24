@@ -724,7 +724,7 @@ We can also do many nice string manipulation operations, since `strings are arra
 We also have many more applications, including passing the reference of an object or a function around to avoid consuming more resources to copy it.  
 
 ## Functions
-Functions are the way we can structure our code into subsets that we can:
+Functions are the way we can structure our code into subsets that we can:  
 give a name to  
 call when we need them  
 
@@ -748,15 +748,13 @@ Functions have 4 important aspects:
 they have a **name**, so we can invoke ("call") them later  
 they specify a **return value**  
 they can have **arguments**   
-they have a **body**, wrapped in curly braces  
+they have a **body**, wrapped in curly braces, {}    
 
-The function body is the set of instructions that are executed any time we invoke a function.  
-
-If the function has no return value, you can use the keyword `void` before the function name. Otherwise you specify the function return value type (`int` for an integer, `float` for a floating point value, `const char *` for a string, etc).  
+The function body is the set of instructions that are executed any time we invoke a function. If the function has no return value, you can use the keyword `void` before the function name. Otherwise you specify the function return value type (`int` for an integer, `float` for a floating point value, `const char *` for a string, etc).  
 
 **You cannot return more than one value from a function.**  
 
-A function can have arguments. They are optional. If it does not have them, inside the parentheses we insert void, like this:  
+A function can have arguments. They are optional. If it does not have them, inside the parentheses we insert `void`, like this:  
 ```
 void doSomething(void) {
    /* ... */
@@ -780,7 +778,7 @@ When we invoke the function, we'll pass that parameter in the parentheses, like 
 ```
 doSomething(3);
 ```
-We can have multiple parameters, and if so we separate them using a comma, both in the declaration and in the invocation:  
+We can have multiple parameters, and if so, we separate them using a comma, both in the declaration and in the invocation:  
 
 ```
 void doSomething(int value1, int value2) {
@@ -810,9 +808,7 @@ Inside a function, you can call the function itself. This is called recursion an
 C is a small language, and the "core" of C does not include any Input/Output (I/O) functionality.
 This is not something unique to C, of course.   
 
-In the case of C, Input/Output is provided to us by the C Standard Library via a set of functions defined in the stdio.h header file.  
-
-You can import this library using:
+In the case of C, Input/Output is provided to us by the C Standard Library via a set of functions defined in the `stdio.h` header file. You can import this library using:
 ```
 #include <stdio.h>
 ```
@@ -825,20 +821,16 @@ fgets()
 fprintf()
 ```
 
-### I/O streamS
+### I/O stream
 We have 3 kinds of I/O streams in C:
 ```
 stdin (standard input)
 stdout (standard output)
 stderr (standard error)
 ```
-With I/O functions we always work with streams. A stream is a high level interface that can represent a device or a file. From the C standpoint, we don't have any difference in reading from a file or reading from the command line: it's an I/O stream in any case.  
+With I/O functions, we always work with streams. A stream is a high level interface that can represent a device or a file. From the C standpoint, we don't have any difference in reading from a file or reading from the command line: it's an I/O stream in any case.  
 
-Some functions are designed to work with a specific stream, like `printf()`, which we use to print characters to `stdout`. Using its more general counterpart `fprintf()`, we can specify which stream to write to.  
-
-printf() is one of the first functions you'll use when learning C programming.
-
-In its simplest usage form, you pass it a string literal:
+Some functions are designed to work with a specific stream, like `printf()`, which we use to print characters to `stdout`. Using its more general counterpart `fprintf()`, we can specify which stream to write to. `printf()` is one of the first functions you'll use when learning C programming. In its simplest usage form, you pass it a string literal:
 ```
 printf("hey!");
 ```
@@ -865,16 +857,10 @@ There are other format specifiers like `%d`:
 %f for floating point numbers
 %p for pointers
 ```
-and many more.
-
-We can use escape characters in printf(), like \n which we can use to make the output create a new line.  
+and many more. We can use escape characters in `printf()`, like `\n` which we can use to make the output create a new line.  
 
 ### scanf()
-`printf()` is used as an output function while an input function is `scanf()`.  
-
-This function is used to get a value from the user running the program, from the command line.  
-
-We must first define a variable that will hold the value we get from the input:  
+`printf()` is used as an output function while an input function is `scanf()`. This function is used to get a value from the user running the program, from the command line. We must first define a variable that will hold the value we get from the input:  
 ```
 int age;
 ```
@@ -883,7 +869,7 @@ Then we call `scanf()` with 2 arguments: `the format (type)` of the variable, an
 ```
 scanf("%d", &age);
 ```
-If we want to get a `string` as input, remember that a string name is a `pointer` to the first character, so you don't need the & character before it:  
+If we want to get a `string` as input, remember that a string name is a `pointer` to the first character, so you don't need the `&` character before it:  
 
 ```
 char name[20];
@@ -904,7 +890,6 @@ int main(void) {
 
 ## Variable scope
 When you define a variable in a C program, depending on where you declare it, it will have a different scope. This means that it will be available in some places, but not in others.  
-
 The position determines 2 types of variables:  
 global variables  
 local variables  
@@ -927,16 +912,13 @@ int main(void) {
 ```
 Global variables are accessible from any function of the program, and they are available for the whole execution of the program, until it ends.  
 
-I mentioned that local variables are not available any more after the function ends.  
-
-The reason is that local variables are declared on the stack, by default, unless you explicitly allocate them on the heap using pointers. But then you have to manage the memory yourself.  
+I mentioned that local variables are not available any more after the function ends. The reason is that local variables are declared on the stack, by default, unless you explicitly allocate them on the heap using pointers. But then you have to manage the memory yourself.  
 
 ## Static variables
-Inside a function, you can initialize a static variable using the static keyword.  
+Inside a function, you can initialize a static variable using the `static` keyword. I said "inside a function" because `global variables` are static by default, so there's no need to add the keyword.  
 
-I said "inside a function" because `global variables` are static by default, so there's no need to add the keyword.  
-
-What's a static variable? A static variable is initialized to 0 if no initial value is specified, and it retains the value across function calls.  
+What's a static variable?  
+A static variable is initialized to `0` if no initial value is specified, and it retains the value across function calls.  
 
 ```
 int incrementAge() {
@@ -945,7 +927,7 @@ int incrementAge() {
   return age;
 }
 ```
-If we call incrementAge() once, we'll get 1 as the return value. If we call it more than once, we'll always get 1 back, because age is a local variable and it's re-initialized to 0 on every single function call.  
+If we call incrementAge() once, we'll get `1` as the return value. If we call it more than once, we'll always get `1` back, because age is a local variable and it's re-initialized to `0` on every single function call.  
 
 If we change the function to:
 ```
@@ -960,14 +942,12 @@ Now every time we call this function, we'll get an incremented value:
 printf("%d\n", incrementAge());
 printf("%d\n", incrementAge());
 printf("%d\n", incrementAge());
-
 will give us
-
 1
 2
 3
 ```
-We can also omit initializing age to 0 in static int age = 0;, and just write static int age; because static variables are automatically set to 0 when created.  
+We can also omit initializing age to `0` in `static int age = 0;`, and just write `static int age;` because static variables are automatically set to `0` when created.  
 
 We can also have static arrays. In this case, each single item in the array is initialized to 0:  
 ```
@@ -979,8 +959,7 @@ int incrementAge() {
 ```
 
 ## Global variables
-In this section I want to talk more about the difference between global and local variables.  
-
+In this section, I want to talk more about the difference between global and local variables.  
 A local variable is defined inside a function, and it's only available inside that function.  
 
 ```
@@ -1007,7 +986,6 @@ int main(void) {
 }
 ```
 A global variable can be accessed by any function in the program.  Access is not limited to reading the value: the variable can be updated by any function.  
-
 Due to this, global variables are one way we have of sharing the same data between functions.
 
 The main difference with local variables is that the memory allocated for variables is freed once the function ends.  
