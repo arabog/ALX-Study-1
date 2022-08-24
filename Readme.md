@@ -993,16 +993,228 @@ The main difference with local variables is that the memory allocated for variab
 Global variables are only freed when the program ends.  
 
 ## Type definitions
+The typedef keyword in C allows you to defined new types.Starting from the built-in C types, we can create our own types, using this syntax:
+```
+typedef existingtype NEWTYPE
+```
+
+The new type we create is usually, by convention, uppercase. This it to distinguish it more easily, and immediately recognize it as type.
+
+For example we can define a new `NUMBER` type that is an `int`:
+```
+typedef int NUMBER
+```
+and once you do so, you can define new NUMBER variables:
+```
+NUMBER one = 1;
+```
+Now you might ask: why? Why not just use the built-in type int instead? Well, typedef gets really useful when paired with two things: enumerated types and structures.  
 
 ## Enumerated Types
+Using the typedef and enum keywords we can define a type that can have either one value or another. It's one of the most important uses of the typedef keyword.
+
+This is the syntax of an enumerated type:
+```
+typedef enum {
+  //...values
+} TYPENAME;
+```
+The enumerated type we create is usually, by convention, uppercase.
+
+Here is a simple example:
+```
+typedef enum {
+  true,
+  false
+} BOOLEAN;
+```
+C comes with a bool type, so this example is not really practical, but you get the idea.
+Another example is to define weekdays:
+```
+typedef enum {
+  monday,  
+  tuesday,
+  wednesday,
+  thursday,
+  friday,
+  saturday,
+  sunday
+} WEEKDAY;
+```
+Here's a simple program that uses this enumerated type:
+```
+#include <stdio.h>
+
+typedef enum {
+  monday,  
+  tuesday,
+  wednesday,
+  thursday,
+  friday,
+  saturday,
+  sunday
+} WEEKDAY;
+
+int main(void) {
+  WEEKDAY day = monday;
+
+  if (day == monday) {
+    printf("It's monday!"); 
+  } else {
+    printf("It's not monday"); 
+  }
+}
+```
+Every item in the enum definition is paired to an integer, internally. So in this example monday is `0`, tuesday is `1` and so on.
+
+This means the conditional could have been `if (day == 0)` instead of `if (day == monday).`
 
 ## Structures
+Using the struct keyword we can create complex data structures using basic C types.
+
+A structure is a collection of values of different types. Arrays in C are limited to a type, so structures can prove to be very interesting in a lot of use cases. This is the syntax of a structure:
+```
+struct <structname> {
+  //...variables
+};
+```
+Example:
+```
+struct person {
+  int age;
+  char *name;
+};
+```
+You can declare variables that have as type that structure by adding them after the closing curly bracket, before the semicolon, like this:
+```
+struct person {
+  int age;
+  char *name;
+} flavio;
+```
+Or multiple ones, like this:
+```
+struct person {
+  int age;
+  char *name;
+} flavio, people[20];
+```
+In this case I declare a single person variable named flavio, and an array of 20 person named people.
+We can also declare variables later on, using this syntax:
+```
+struct person {
+  int age;
+  char *name;
+};
+
+struct person flavio;
+```
+We can initialize a structure at declaration time:
+```
+struct person {
+  int age;
+  char *name;
+};
+
+struct person flavio = { 37, "Flavio" };
+```
+and once we have a structure defined, we can access the values in it using a dot:
+```
+struct person {
+  int age;
+  char *name;
+};
+
+struct person flavio = { 37, "Flavio" };
+printf("%s, age %u", flavio.name, flavio.age);
+```
+
+We can also change the values using the dot syntax:
+```
+struct person {
+  int age;
+  char *name;
+};
+
+struct person flavio = { 37, "Flavio" };
+
+flavio.age = 38;
+```
+Structures are very useful because we can pass them around as function parameters, or return values, embedding various variables within them. Each variable has a label.  
+It's important to note that structures are passed by copy, unless of course you pass a pointer to a struct, in which case it's passed by reference.
+Using typedef we can simplify the code when working with structures.
+```
+typedef struct {
+  int age;
+  char *name;
+} PERSON;
+```
+The structure we create using typedef is usually, by convention, uppercase.
+Now we can declare new PERSON variables like this:
+```
+PERSON flavio;
+```
+and we can initialize them at declaration in this way:
+```
+PERSON flavio = { 37, "Flavio" };
+```
 
 ## Command line parameters
+In your C programs, you might need to accept parameters from the command line when the command launches.
+For simple needs, all you need to do to do so is change the `main()` function signature from
+```
+int main(void)
+```
+to
+```
+int main (int argc, char *argv[])
+```
+`argc` is an integer number that contains the number of parameters that were provided in the command line.  
+`argv` is an array of strings.
+When the program starts, we are provided the arguments in those 2 parameters.
+Note that there's always at least one item in the argv array: the name of the program  
+Let's take the example of the C compiler we use to run our programs, like this:
+```
+gcc hello.c -o hello
+```
+If this was our program, we'd have argc being 4 and argv being an array containing
+```
+gcc
+hello.c
+-o
+hello
+```
+Let's write a program that prints the arguments it receives:
+```
+#include <stdio.h>
 
-<!-- stop -->
+int main (int argc, char *argv[]) {
+  for (int i = 0; i < argc; i++) {
+    printf("%s\n", argv[i]);
+  }
+}
+```
+If the name of our program is hello and we run it like this: `./hello`, we'd get this as output:
+```
+./hello
+```
+If we pass some random parameters, like this: `./hello a b c` we'd get this output to the terminal:
+```
+./hello
+a
+b
+c
+```
+This system works great for simple needs. For more complex needs, there are commonly used packages like **getopt**.
+
 ## Header files
+
+
+
 ## The preprocessor
+
+
+
 ## Conclusion
 
 <!-- ![cf1](cf1.png?raw=true "cf1") -->
