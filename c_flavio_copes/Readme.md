@@ -1208,13 +1208,137 @@ c
 This system works great for simple needs. For more complex needs, there are commonly used packages like **getopt**.
 
 ## Header files
+Simple programs can be put in a single file. But when your program grows larger it's impossible to keep it all in just one file. You can move parts of a program to a separate file. Then you create a header file.  
 
+A header file looks like a normal C file, except it ends with `.h` instead of `.c`. Instead of the implementations of your functions and the other parts of a program, it holds the declarations.  
+You already used header files when you first used the printf() function, or other I/O function, and you had to type: `#include <stdio.h>` to use it.  
+`#include` is a preprocessor directive.
 
+The preprocessor goes and looks up the stdio.h file in the standard library because you used brackets around it. To include your own header files, you'll use quotes, like this:  
+`#include "myfile.h"`  
+The above will look up myfile.h in the current folder. You can also use a folder structure for libraries: `#include "myfolder/myfile.h"`  
+
+Let's look at an example. This program calculates the years since a given year:
+```
+#include <stdio.h>
+
+int calculateAge(int year) {
+  const int CURRENT_YEAR = 2020;
+  return CURRENT_YEAR - year;
+}
+
+int main(void) {
+  printf("%u", calculateAge(1983));
+}
+```
+
+Suppose I want to move the calculateAge function to a separate file. I create a calculate_age.c file:
+```
+int calculateAge(int year) {
+  const int CURRENT_YEAR = 2020;
+  return CURRENT_YEAR - year;
+}
+```
+And a calculate_age.h file where I put the function prototype, which is the same as the function in the .c file, except the body:
+```
+int calculateAge(int year);
+```
+Now in the main .c file we can go and remove the calculateAge() function definition, and we can import calculate_age.h, which will make the calculateAge() function available:
+```
+#include <stdio.h>
+#include "calculate_age.h"
+
+int main(void) {
+  printf("%u", calculateAge(1983));
+}
+```
+Don't forget that to compile a program composed by multiple files, you need to list them all in the command line, like this:
+```
+gcc -o main main.c calculate_age.c
+```
+And with more complex setups, a **Makefile** is necessary to tell the compiler how to compile the program.
 
 ## The preprocessor
+The preprocessor is a tool that helps us a lot when programming with C. It is part of the C Standard, just like the language, the compiler, and the standard library. It parses our program and makes sure that the compiler gets all the things it needs before going on with the process.  
+### What does it do, in practice?
+For example, it looks up all the header files you include with the #include directive.
 
+It also looks at every constant you defined using #define and substitutes it with its actual value.
 
+That's just the start. I mentioned those 2 operations because they are the most common ones. The preprocessor can do a lot more.
 
-## Conclusion
+Did you notice `#include` and `#define` have a # at the beginning? That's common to all the preprocessor directives. If a line starts with #, that's taken care of by the preprocessor.  
 
-<!-- ![cf1](cf1.png?raw=true "cf1") -->
+### Conditionals
+One of the things we can do is to use conditionals to change how our program will be compiled, depending on the value of an expression. For example we can check if the DEBUG constant is 0:  
+```
+#include <stdio.h>
+
+const int DEBUG = 0;
+
+int main(void) {
+#if DEBUG == 0
+  printf("I am NOT debugging\n");
+#else
+  printf("I am debugging\n");
+#endif
+}
+```
+### Symbolic constants
+We can define a symbolic constant:
+```
+#define VALUE 1
+#define PI 3.14
+#define NAME "Flavio"
+```
+When we use NAME or PI or VALUE in our program, the preprocessor replaces its name with the value before executing the program. Symbolic constants are very useful because we can give names to values without creating variables at compilation time.  
+
+### Macros
+With #define we can also define a macro. The difference between a macro and a symbolic constant is that a macro can accept an argument and typically contains code, while a symbolic constant is a value:
+```
+#define POWER(x) ((x) * (x))
+```
+Then we can use it in our code like this:
+```
+printf("%u\n", POWER(4)); //16
+```
+The big difference with functions is that macros do not specify the type of their arguments or return values, which might be handy in some cases.  
+
+Macros, however, are limited to one line definitions.  
+
+### If defined
+We can check if a symbolic constant or a macro is defined using #ifdef:
+```
+#include <stdio.h>
+#define VALUE 1
+
+int main(void) {
+#ifdef VALUE
+  printf("Value is defined\n");
+#else
+  printf("Value is not defined\n");
+#endif
+}
+```
+We also have #ifndev to check for the opposite (macro not defined). We can also use `#if defined` and `#if !defined` to do the same task.  
+It's common to wrap some block of code into a block like this:
+```
+#if 0
+
+#endif
+```
+to temporarily prevent it from running, or to use a DEBUG symbolic constant:
+```
+#define DEBUG 0
+
+#if DEBUG
+  //code only sent to the compiler
+  //if DEBUG is not 0
+#endif
+```
+### Predefined symbolic constants you can use
+The preprocessor also defines a number of symbolic constants you can use, identified by the 2 underscores before and after the name, including:  
+`__LINE__` translates to the current line in the source code file  
+`__FILE__` translates to the name of the file  
+`__DATE__` translates to the compilation date, in the Mmm gg aaaa format  
+`__TIME__` translates to the compilation time, in the hh:mm:ss format  
