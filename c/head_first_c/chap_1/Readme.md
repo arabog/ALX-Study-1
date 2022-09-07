@@ -288,3 +288,172 @@ In fact, C programs often use this as a shorthand way of checking if something i
 The code works. By combining multiple conditions with a boolean
 operator, you check for a range of values rather than a single value.
 You now have the basic structure in place for a card counter.
+
+## Switch Statement
+Sometimes when you’re writing conditional logic, you need to
+check the value of the same variable over and over again. To
+prevent you from having to write lots and lots of if statements,
+the C language gives you another option: the switch statement.
+The switch statement is kind of like an if statement, except it
+can test for multiple values of a single variable:
+```
+switch(train) {
+    case 37:
+        winnings = winnings + 50; //if d train == 37, add 50 to d winnings & dn skip to d end
+        break;
+    case 65:
+        puts("Jackpot!");
+        winnings = winnings + 80; //if d train == 65, add 80 to d winnings & dn also add 20 to d winnings dn, skip to d end
+
+    case 12:
+        winnings = winnings + 20; //if d train == 12, add 20 to d winnings & dn skip to d end
+        break;
+
+    default:
+        winnings = 0; // for any oda value of train, set d winnings back to ZERO
+}
+```
+When the computer hits a switch statement, it checks the value it was given, and then looks for a matching case. When it finds one, it runs all of the code that follows it until it reaches a break statement. The computer keeps going until it is told to break out of the switch statement.  
+
+Q: Why would I use a switch statement instead of an if?  
+A: If you are performing multiple checks on the same variable, you might want to use a switch statement.  
+
+Q: Can I check strings in a switch statement?
+A: No, you can’t use a switch statement to check a string of characters or any kind of array. The switch statement will only check a single value.  
+
+## Using while loops in C
+Loops are a special type of control statement. A control statement
+decides if a section of code will be run, but a loop statement decides
+how many times a piece of code will be run.  
+The most basic kind of loop in C is the while loop. A while loop
+runs code over and over and over as long as some condition remains true.  
+```
+while(<some condition>) { //check d conditn bf running d body
+    /* Do smth here */
+} wn it gets to d end of d body, d computer checks if d loop conditn is still
+true. if it's, d body code runs again.
+```
+## Do you do while?
+There’s another form of the while loop that checks the loop condition after the loop body is run. That means the loop always executes at least once. It’s called the do...while loop:
+```
+do {
+    /* Buy lottery ticket */
+} while(have_not_won);
+```
+### Loops often follow the same structure…
+You can use the while loop anytime you need to repeat a piece
+of code, but a lot of the time your loops will have the same kind
+of structure:  
+Do something simple before the loop, like set a counter.  
+Have a simple test condition on the loop.  
+Do something at the end of a loop, like update a counter.  
+
+For example, this is a while loop that counts from 1 to 10:
+```
+int counter = 1;            This is the loop startup code.
+
+while (counter < 11) {      This is the loop condition.
+    printf("%i green bottles, hanging on a wall\n", counter);
+    counter++;              
+}
+
+counter++;  This is the loop update code that runs at the end of the loop body to update a counter. Remember: counter++ means “increase the counter variable by one.”
+```
+### …and the for loop makes this easy
+Because this pattern is so common, the designers of C created the
+for loop to make it a little more concise. Here is that same piece
+of code written with a for loop:
+```
+int counter; 
+
+for (counter = 1; counter < 11; counter++) {
+    printf("%i green bottles, hanging on a wall\n", counter);
+}
+
+counter = 1;    This initializes the loop variable.
+counter < 11;   This is the condition checked
+before the loop runs each time.
+printf("%i green bottles, hanging on a wall\n", counter);   //d body is run
+counter++   This is the code that will run after each loop.
+```
+## You use break to break out…
+You can create loops that check a condition at the beginning or end
+of the loop body. But what if you want to escape from the loop from
+somewhere in the middle? You could always restructure your code,
+but sometimes it’s just simpler to skip out of the loop immediately using
+the `break` statement:
+```
+while(feeling_hungry) {
+    eat_cake();
+
+    if(feeling_queasy) {
+        /* Break out of d while loop */
+        break;  //break skips out of d loop immediately
+    }
+
+    drink_coffee();
+}
+```
+The break statement is used to break out of loops and also switch statements.  
+A break statement will break you straight out of the current loop, skipping whatever follows it in the loop body. breaks can be useful because they’re sometimes the simplest and best way to end a loop. But you might want to avoid using too many, because they can also make the code a little harder to read.  
+
+### …and continue to continue
+If you want to skip the rest of the loop body and go back to the
+start of the loop, then the continue statement is your friend:
+```
+while(feeling_hungry) {
+    if(not_lunch_yet) {
+        /* Go back to d loop condition */
+        continue;
+    }
+
+    eat_cake();
+}
+```
+### breaks don’t break if statements.
+On January 15, 1990, AT&T’s long-distance telephone system
+crashed, and 60,000 people lost their phone service. The
+cause? A developer working on the C code used in the
+exchanges tried to use a break to break out of an if statement.  
+But breaks don’t break out of ifs. Instead, the program
+skipped an entire section of code and introduced a bug that
+interrupted 70 million phone calls over nine hours.  
+
+### Writing Functions Up Close
+So far, you’ve had to create one function in every program you’ve
+written, the main() function:
+```
+int main() { This is the name of the function, it returns an int value. Nothing between these parentheses.
+    puts("Too young to die; too beautiful to live");
+    return 0;   wn u'r done, u return a value
+}
+```
+
+Pretty much all functions in C follow the same format. For
+example, this is a program with a custom function that gets called
+by main():
+```
+#include <stdio.h>
+
+int larger(int a, int b) {  Returns an int value. This function takes two arguments: a and b. Both arguments are int
+    if (a > b)
+        return a;
+    return b;
+}
+
+int main() {
+    int greatest = larger(100, 1000);   Calling the function here
+    printf("%i is the greatest!\n", greatest);
+    return 0;
+}
+```
+The larger() function is slightly different from main() because
+it takes arguments or parameters.  
+
+### The Polite Guide to Standards
+The main() function has an int return type, so you should include a
+return statement when you get to the end. But if you leave the return
+statement out, the code will still compile—though you may get a warning
+from the compiler. A C99 compiler will insert a return statement for
+you if you forget. Use -std=99 to compile to the C99 standard.  
+
