@@ -444,6 +444,7 @@ int larger(int a, int b) {  Returns an int value. This function takes two argume
 int main() {
     int greatest = larger(100, 1000);   Calling the function here
     printf("%i is the greatest!\n", greatest);
+
     return 0;
 }
 ```
@@ -456,4 +457,57 @@ return statement when you get to the end. But if you leave the return
 statement out, the code will still compile—though you may get a warning
 from the compiler. A C99 compiler will insert a return statement for
 you if you forget. Use -std=99 to compile to the C99 standard.  
+
+### Void Functions Up Close
+Most functions in C have a return value, but sometimes you
+might want to create a function that has nothing useful to return. It
+might just do stuff rather than calculate stuff. Normally, functions always
+have to contain a return statement, but not if you give your function
+the return type void:  
+```
+void complain() {
+    puts("I'm really happy");
+}
+```
+In C, the keyword void means it doesn’t matter. As soon as you tell
+the C compiler that you don’t care about returning a value from the
+function, you don’t need to have a return statement in your function.  
+
+### Chaining Assignments
+Almost everything in C has
+a return value, and not just
+function calls. In fact, even
+things like assignments have
+return values. For example, if you look at
+this statement:  
+```
+x = 4;
+```
+It assigns the number 4 to a variable. The expression “x = 4” itself has the value that was assigned: 4. So why does that matter?
+Because it means you can do cool tricks,
+like chaining assignments together:
+```
+y = x = 4;
+```
+That line of code will set both x and y to the value 4. You’ll often see chained assignments in code that needs to set several variables to the same value.  
+
+**The card counting program works!**  
+You’ve completed your first C program. By using the power of C statements, loops, and conditions, you’ve created a fully functioning card counter.  
+
+C is compiled to make the code fast.  
+
+Q: Is C++ just another version of C?
+A: No. C++ was originally designed as an extension of C, but now it’s a little more
+than that. C++ and Objective-C were both created to use object orientation with C.  
+
+Q: What does gcc stand for?  
+A: The Gnu Compiler Collection  
+
+You can exit a loop at any time with break.  
+You can skip to the loop condition at any time with continue  
+
+gcc file_name.c -o file_name  
+-o specifies d output file  
+
+
 

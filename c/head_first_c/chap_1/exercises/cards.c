@@ -11,7 +11,7 @@ int main() {
     char card_name[3];
 
     puts("Enter the card name: ");
-    scanf("%2s", card_name);
+    scanf("%2s", card_name); //wtever d input is weda num or alphabets, is d card name
 
     int val = 0;
 
