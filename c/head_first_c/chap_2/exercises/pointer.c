@@ -1,6 +1,10 @@
 /*
 #include <stdio.h>  
 void go_south_east(int lat, int lon) {
+    
+    // When the go_south_east() function changes the value of lon, 
+    // the function is just changing its local copy
+    
     lat = lat - 1;
     lon = lon + 1;
 }
@@ -17,9 +21,10 @@ int main() {
 }
 */
 
+
 #include <stdio.h>
 
-void go_south_east(int *lat, int *lon){
+void go_south_east(int *lat, int *lon){ /*int *lat/*lon is used to store pter/address*/
     *lat = *lat - 1;
     *lon = *lon + 1;
 }
