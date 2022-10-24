@@ -92,8 +92,7 @@ means that the program was successful. If you tell it to return any other value,
 this means that there was a problem.  
 
 The function name comes after the return type. That’s followed by the function
-parameters if there are any. Finally, we have the function body. The function body
-must be surrounded by braces.  
+parameters if there are any. Finally, we have the function body. The function body must be surrounded by braces.  
 
 The printf() function is used to display formatted output. It
 replaces format characters with the values of variables, like this:  
@@ -108,6 +107,8 @@ d 2nd parameter, %i, will be inserted as an integer
 ```
 You can include as many parameters as you like when you call the printf()
 function, but make sure you have a matching % format character for each one.  
+
+**If u want to check d exit status of a program type: in Linux/Mac, use echo $?**
 ```
 scanf("%2s", card_name); Enter 2 xters for d card name
 
@@ -162,7 +163,7 @@ how this works, let’s take a deeper dive into the computer’s
 memory and see how C handles text…  
 
 ## Strings Way Up Close
-Strings are just character arrays. When C sees a string like this:
+**Strings are just character arrays.** When C sees a string like this:
 s = "Shatner"  
 it reads it like it was just an array of separate characters:  
 s = {'S', 'h', 'a', 't', 'n', 'e', 'r'}  <!-- This is how you define an array in C.   -->
@@ -184,7 +185,7 @@ string, it goes through the elements of the character array one at a time, until
 it reaches \0. That means that when the computer sees this:  
 s = "Shatner"  
 it actually stores it in memory like this: S h a t n e r \0
-\0 is d ASCII character with value 0. C coders often call this the NULL xter.  
+\0 is d ASCII character with value 0. C coders often call this the **NULL xter**.  
 
 That’s why in our code we had to define the card_name variable like this:  
 char card_name[3];  

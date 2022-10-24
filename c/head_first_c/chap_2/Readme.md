@@ -4,7 +4,7 @@ how C handles memory. The C language gives you a lot more control over how your 
 you read and write variables. You’ll learn how arrays work and you’ll see how mastering pointers and memory addressing is key to becoming a kick-ass C programmer.  
 
 ## C code includes pointers
-Pointers are one of the most fundamental things to understand in the C programming language. So what’s a pointer? **A pointer is just the address of a piece of data in memory.** It's the location of the information/data. 
+Pointers are one of the most fundamental things to understand in the C programming language. So what’s a pointer? **A pointer is the address/location of data in memory.** It's the location of the information/data. 
 
 Pointers are used in C for a couple of reasons.  
 1. Instead of passing around a whole copy of the data, you can just pass a pointer.    
@@ -15,6 +15,8 @@ Pointers are used in C for a couple of reasons.
 ## Digging into memory
 To understand what pointers are, you’ll need to dig into the memory of the computer.  
 Every time you declare a variable, the computer creates space for it somewhere in memory. If you declare a variable inside a function like main(), the computer will store it in a section of memory called the **stack**. If a variable is declared outside any function, it will be stored in the **globals** section of memory.  
+
+**Diff btw stack and globals**  
 ```
 int y = 4;
 
@@ -28,12 +30,12 @@ The computer might allocate, say, memory location 4,100,000 in the stack for the
 If you want to find out the memory address of the variable, you can use the **&** operator:  
 ```
 printf("x is stored at %p\n", &x);
-%p: is used to format address  
+%p: is used to **format address**  
 &x: is d address of x  
 ```
 The address of the variable tells you where to find the variable in memory. That’s why an address is also called a pointer, because it points to the variable in memory.  
 When you call a function, you don’t send the variable as an argument, just its value.  
-**Instead of passing the value of the variable (by copy), pass its location.**  
+**Instead of passing the value of the variable (by copy), pass its location. When you call a function, you do not send the variable as an argument, just its value.**
 
 Q: Why are local variables stored in the stack and globals stored somewhere else?
 A: Local and global variables are used differently. You will only ever get one copy of a global variable, but if you write a function that calls itself, you might get very many instances of the same local variable.  
@@ -71,7 +73,10 @@ The `*` and `&` operators are opposites. The `&` operator takes a piece
 of data and tells you where it’s stored. The `*` operator takes an
 address and tells you what’s stored there. Because pointers are
 sometimes called references, the `*` operator is said to dereference
-a pointer.
+a pointer.   
+
+**& operator is used to read/find(reference) data while * is used to read and write(deference) data**  
+**Pointer variable (int *pter_var = &var) stores memory address**   
 
 3. Change the contents of an address.  
 If you have a pointer variable and you want to change the data
@@ -157,4 +162,4 @@ we passed in is shorter?
 
 Why do you think sizeof(msg) is shorter than the length of the whole string? What is msg? Why would it return different sizes on different machines?  
 
-
+## Array variables are like pointers…
