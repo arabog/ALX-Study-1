@@ -324,3 +324,10 @@ release(start);
 ```
 Dynamic memory allocation lets you create the memory you need at RUNTIME. And the way you access dynamic heap memory is with malloc() and free().
 
+## Prepare your code: add debug info
+To add debug info into your executable, you need to recompile the
+source with the -g switch.
+
+You’ll start valgrind on the command line with the **--leak-check=full** option and then pass it the program you want to run:
+```
+valgrind --leak-check=full ./spies
