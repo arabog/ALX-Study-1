@@ -239,6 +239,139 @@ struct fields are accessed by name, using the <struct>.<field name> syntax (aka 
 typedef creates an alias for a data type.
 If you use typedef with a struct, then you can skip giving the struct a name.
 ```
+## How do you update a struct?
+A struct is really just a bundle of variables, grouped together and
+treated like a single piece of data. You’ve already seen how to create
+a struct object, and how to access its values using dot notation.
+But how do you change the value of a struct that already exists?
+Well, you can change the fields just like any other variable:
+```
+This creates a struct.
+fish snappy = {"Snappy", "piranha", 69, 4};
 
+This reads the value of the name field.
+printf("Hello %s\n", snappy.name);
+
+This sets the value of the teeth field
+snappy.teeth = 68;
+```
+That means if you look at this piece of code, you should be able to
+work out what it does, right?
+```
+#include <stdio.h>
+
+typedef struct {
+const char *name;
+const char *species;
+int age;
+} turtle;
+
+void happy_birthday(turtle t)
+{
+t.age = t.age + 1;
+printf("Happy Birthday %s! You are now %i years old!\n",
+t.name, t.age);
+}
+
+int main()
+{
+turtle myrtle = {"Myrtle", "Leatherback sea turtle", 99};
+happy_birthday(myrtle);
+printf("%s's age is now %i\n", myrtle.name, myrtle.age);
+return 0;
+}
+```
+**But there’s something odd about this code…**  
+
+## The code is cloning the turtle
+Let’s take a closer look at the code that called the happy_birthday() function:
+```
+void happy_birthday(turtle t)
+{
+...
+}
+
+<!-- This is the turtle (myrtle) that we are passing to the function. -->
+happy_birthday(myrtle);
+<!-- The myrtle struct will be copied to this parameter. -->
+```
+
+In C, parameters are passed to functions by value. That
+means that when you call a function, the values you pass into
+it are assigned to the parameters. So in this code, it’s almost as
+if you had written something like this:
+```
+turtle t = myrtle;
+```
+But remember: when you assign structs in C, the values are copied. When you call the function, the parameter t will contain a copy of the myrtle struct. It’s as if the function has a clone of the original turtle. So the code inside the function does update the age of the turtle, but it’s a different turtle.  
+What happens when the function returns? The t parameter disappears, and the rest of the code in main() uses the myrtle struct. But the value of myrtle was never
+changed by the code. It was always a completely separate piece of data.  
+
+**So what do you do if you want pass a struct to a function that needs to update it?**  
+
+## You need a pointer to the struct
+When you passed a variable to the scanf() function, you couldn’t
+pass the variable itself to scanf(); you had to pass a pointer:
+```
+scanf("%f", &length_of_run);
+```
+Why did you do that? Because if you tell the scanf() function where the variable lives in memory, then the function will be able to update the data stored at that place in memory, which means it can update the variable.  
+And you can do just the same with structs. If you want a function to update a struct variable, you can’t just pass the struct as a parameter because that will simply send a copy of the data to the function. Instead, you can pass the address of the struct:
+```
+(turtle *t) // This means “Someone is going to give me a pointer to a struct. Remember: an address is a pointer
+
+void happy_birthday(turtle *t) 
+{
+...
+}
+
+happy_birthday(&myrtle);
+(&myrtle) //This means you will pass the address of the myrtle variable to the function.
+
+That is:
+#include <stdio.h>
+
+
+typedef struct {
+const char *name;
+const char *species;
+int age;
+} turtle;
+
+void happy_birthday(turtle *t)
+{
+(*t).age = (*t).age + 1;
+printf("Happy Birthday %s! You are now %i years old!\n", (*t).name, (*t).age);
+}
+
+int main()
+{
+turtle myrtle = {"Myrtle", "Leatherback sea turtle", 99};
+happy_birthday(&myrtle);
+printf("%s's age is now %i\n", myrtle.name, myrtle.age);
+return 0;
+}
+```
+
+## (*t).age vs. *t.age
+So why did you need to make sure that *t was wrapped in
+parentheses? It’s because the two expressions, (*t).age
+and *t.age, are very different.
+```
+(*t).age = *t.age
+
+(*t).age: I am the age of the turtle pointed to by t.
+If t is a pointer to a turtle struct, then this is the age of the turtle
+
+*t.age: I am the contents of the memory location given by t.age.
+If t is a pointer to a turtle struct, then this expression is wrong.
+```
+So the expression *t.age is really the same as *(t.age). It means “the contents of the memory location given by t.age.” But t.age isn’t a memory location.  
+
+**So be careful with your parentheses when using structs—parentheses really matter.**  
+
+By passing a pointer to the struct, you allowed the function to update the original data rather than taking a local copy.
+
+# t->age means (*t).age
 
 stops at 246
