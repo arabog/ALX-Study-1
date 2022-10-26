@@ -187,5 +187,58 @@ fields using a chain of “.” operators:
 printf("Snappy likes to eat %s", snappy.care.food);
 printf("Snappy likes to exercise for %f hours", snappy.care.exercise_hours);
 ```
+## You can give your struct a proper name using typedef.
+When you create variables for built-in data types, you can use simple short
+names like int or double, but so far, every time you’ve created a variable
+containing a struct you’ve had to include the struct keyword.
+```
+struct cell_phone {
+int cell_no;
+const char *wallpaper;
+float minutes_of_charge;
+};
 
-stops at 227
+struct cell_phone p = {5557879, "sinatra.png", 1.35};
+```
+But C allows you to create an alias for any struct that
+you create. If you add the word typedef before the struct
+keyword, and a type name after the closing brace, you can call
+the new type whatever you like:
+```
+typedef struct cell_phone { // typedef means you are going to give the struct type a new name.
+int cell_no;
+const char *wallpaper;
+float minutes_of_charge;
+} phone; // hone will become an alias for "struct cell_phone"
+
+Now, when the compiler sees “phone,” it will treat it like “struct cell_phone.”
+phone p = {5557879, "sinatra.png", 1.35};
+```
+typedefs can shorten your code and make it
+easier to read. Let’s see what your code will look
+like if you start to add typedefs to it…
+
+## What should I call my new type?
+If you use typedef to create an alias for a struct, you will need to decide what your alias will be. The alias is just the name of your type. That means there are two names to think about: the name of the struct (struct cell_phone) and the name of the type (phone). Why have two names? You usually don’t need both. The compiler is quite happy for you to skip the struct name, like this:
+```
+typedef struct {
+int cell_no;
+const char *wallpaper;
+float minutes_of_charge;
+} phone;  // This is the alias.
+
+phone p = {5557879, "s.png", 1.35};
+```
+## Bullet Points
+```
+A struct is a data type made from a sequence of other data types.
+struct fields are stored in memory in the same order they appear in the code.
+structs are/have fixed length.
+You can nest structs.
+struct fields are accessed by name, using the <struct>.<field name> syntax (aka dot notation).
+typedef creates an alias for a data type.
+If you use typedef with a struct, then you can skip giving the struct a name.
+```
+
+
+stops at 246
