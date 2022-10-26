@@ -373,5 +373,21 @@ So the expression *t.age is really the same as *(t.age). It means “the content
 By passing a pointer to the struct, you allowed the function to update the original data rather than taking a local copy.
 
 # t->age means (*t).age
+So, t->age means, “The age field in the struct that t
+points to,” That means you can also write the function like this:
+```
+void happy_birthday(turtle *a)
+{
+a->age = a->age + 1;
+printf("Happy Birthday %s! You are now %i years old!\n", a->name, a->age");
+}
+```
+Q: Why isn’t *t.age just read as (*t).age?
+A: Because the computer evaluates the dot operator before it evaluates the *.  
+
+**pointer->field is the same as (*pointer).field.**  
+
+## Sometimes the same type of thing needs different types of data
+
 
 stops at 246
