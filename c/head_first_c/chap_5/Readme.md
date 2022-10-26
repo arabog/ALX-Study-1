@@ -416,6 +416,104 @@ volume against it.
 **In C, you can do just that by using a union.**  
 
 ## A union lets you reuse memory space
+Every time you create an instance of a struct, the computer
+will lay out the fields in memory, one after the other:
+```
+| char *name | int age | float weight |
 
+char *name: This is a char pointer to the name.
+int age: This is space for the age as an int.
+float weight: This is a float to store the weight.
 
-stops at 246
+Dog d = {"Biff", 2, 98.5};
+```
+A union is different. A union will use the space for just one
+of the fields in its definition. So, if you have a union called
+quantity, with fields called count, weight, and volume,
+the computer will give the union enough space for its largest
+field, and then leave it up to you which value you will store in
+there. Whether you set the count, weight, or volume field,
+the data will go into the same space in memory:
+```
+quantity (might be a float or a short);
+
+If a float takes 4 bytes, and a short takes 2, then this space will be 4 bytes long
+A union looks like a struct, but it uses the union keyword.
+
+typedef union {
+<!-- 
+Each of these fields will be stored in the same space. 
+These are all different types, but they’re all quantities.
+-->
+short count;
+float weight;
+float volume;
+} quantity;
+```
+## How do you use a union?
+When you declare a union variable, there are a few ways of setting its value.
+
+## C89 style for the first field
+If the union is going to store a value for the first field,
+then you can use C89 notation. To give the union a
+value for its first field, just wrap the value in braces:
+```
+quantity q = {4}; // This means the quantity is a count of 4
+```
+## Designated initializers set other values
+A designated initializer sets a union field value by
+name, like this:
+```
+quantity q = {.weight=1.5};  // This will set the union for a floating-point weight value.
+```
+## Set the value with dot notation
+The third way of setting a union value is by creating the
+variable on one line, and setting a field value on another
+line:
+```
+quantity q;
+q.volume = 3.7;
+```
+**Remember:** whichever way you set the union’s value, there will only ever be one piece of data stored. The union just gives you a way of creating a variable that supports several different data types.  
+
+Q: Why is a union always set to the size of the largest field?  
+A: The computer needs to make sure that a union is always the same size. The only way it can do that is by making sure it is large enough to contain any of the fields.  
+
+Q: Why does the C89 notation only set the first field? Why not set it to the first float if I pass it a float value?   
+A: To avoid ambiguity. If you had, say, a float and a double field, should the computer store {2.1} as a float or a double? By always storing the value in the first field, you know exactly how the data will be initialized.  
+
+**Yes, designated initializers can be used to set the initial values of fields in structs as well.**  
+They can be very useful if you have a struct that contains a large
+number of fields and you initially just want to set a few of them. It’s
+also a good way of making your code more readable:
+```
+typedef struct {
+const char *color;
+int gears;
+int height;
+} bike;
+
+// This will set the gears and the height fields, but won’t set the color field.
+
+bike b = {.height=17, .gears=21};
+```
+
+## unions are often used with structs
+Once you’ve created a union, you’ve created a new data type. That means you can use its values anywhere you would use another data type like an int or a struct. For example, you can combine them with structs:
+```
+typedef struct {
+const char *name;
+const char *country;
+quantity amount;
+} fruit_order;
+```
+And you can access the values in the struct/union combination using the dot or -> notation you used before:
+```
+It’s .amount because that’s the name of the struct quantity variable.
+
+fruit_order apples = {"apples", "England", .amount.weight=4.2};
+
+printf("This order contains %2.2f lbs of %s\n", apples.amount.weight, apples.name);
+This will print “This order contains 4.20 lbs of apples.”
+stops at 257
+```
