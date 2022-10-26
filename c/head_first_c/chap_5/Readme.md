@@ -388,6 +388,34 @@ A: Because the computer evaluates the dot operator before it evaluates the *.
 **pointer->field is the same as (*pointer).field.**  
 
 ## Sometimes the same type of thing needs different types of data
+structs enable you to model more complex things from the real
+world. But there are pieces of data that don’t have a single data type. 
+
+So if you want to record, say, a quantity of something, and that
+quantity might be a count, a weight, or a volume, how would you
+do that? Well, you could create several fields with a struct, like this:
+```
+typedef struct {
+...
+short count;
+float weight;
+float volume;
+...
+} fruit;
+```
+But there are a few reasons why this is not a good idea:
+```
+It will take up more space in memory.
+Someone might set more than one value.
+There’s nothing called “quantity.”
+```
+It would be really useful if you could specify something called
+quantity in a data type and then decide for each particular piece
+of data whether you are going to record a count, a weight, or a
+volume against it.  
+**In C, you can do just that by using a union.**  
+
+## A union lets you reuse memory space
 
 
 stops at 246
